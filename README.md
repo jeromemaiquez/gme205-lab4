@@ -33,6 +33,9 @@ In the terminal, ensuring that ```(.venv)``` is present in the prompt, run the f
 3. How many parcels are there per zone?
 4. Which parcels intersect a proposed development boundary? (Only using the `zone` information, e.g., which parcels are residential/commercial and thus suitable for development.)
 
+# Assumptions
+- The **area threshold used is 300 square meters**. This follows RA 7279, which defines "small property owners" as those whose only real property consists of residential lands NOT EXCEEDING 300 square meters in highly urbanized cities. For the purposes of this exercise, the two other qualifiers ("residential lands" and "highly urbanized cities") are ignored.
+
 # Algorithm:
 1. Start
 2. Load parcel data from JSON file

@@ -7,4 +7,9 @@ with open(fp_parcels, "r") as file:
     parcels_data = json.load(file)
 # print(parcels_data[:2])
 
+# Testing total_active_area()
 print(total_active_area(parcels_data))
+
+# Testing parcels_above_threshold()
+threshold_area = 300
+print(parcels_above_threshold(parcels_data, threshold_area))
