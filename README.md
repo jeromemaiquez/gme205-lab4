@@ -105,3 +105,18 @@ DISPLAY total_active_area
 DISPLAY large_parcels
 DISPLAY count_per_zone
 DISPLAY intersecting_parcels
+
+# Reflections
+1. Sequence appears all throughout the system, since procedural programming is the baseline paradigm used. Meanwhile, Selection and Repetition are found mainly in `analysis.py` (as each function needs to loop through each parcel from a list and test some condition to perform some calculation), as well as in `run_lab4.py` (to convert the parcel dicts into Parcel objects and check whether the resulting list of parcels is empty).
+
+2. If I did not perform algorithm planning, I may still have arrived at a similar result if I were careful in executing the logic, but I likely would have taken much longer to get there. However, there would have been a risk that logic would be scattered across the system. Selection and Repetition, in particular, would have occurred in places where they shouldn't have, making the whole spatial computation system less clear.
+
+3. Spatial behavior still lives in `spatial.py` (specifically in the `SpatialObject` and `Parcel` classes), despite all of the additional analytical functions designed. It is important for these classes to retain responsibility over spatial behavior, such that this logic can be hidden away from the rest of the code. This allows the developer (i.e., me) to reason about the solution more clearly and implement additions faster.
+
+4. We essentially split two different responsibilities between two scripts. `analysis.py` is in charge of the analytical logic (i.e., answering specific questions), while `demo.py` is in charge of orchestrating the whole workflow to go from loading the inputs, to performing the analytical steps, to creating the outputs. By hiding the analytical logic away in `analysis.py`, `demo.py` can focus on this overall workflow.
+
+5. The `Parcel` class would be a bloated mess, burdened with logic that shouldn't be its responsibility. It would have to accommodate lists of `Parcel` objects (instead of only worrying about individual instances), and then it would have to have methods for each analytical function. It would be closer to a "God class" in this case, which tends to be unwieldy to use in practice.
+
+6. Since we took the time to structure our logic properly and assigned different responsibilities to different scripts (spatial logic in `spatial.py`, analytical functions in `analysis.py`, and overall workflow in `run_lab4.py`), it would be extremely easy to implement a new rule. It would be as simple as adding a new function to `analysis.py`, and then adding a few lines to run this in `run_lab4.py` and including it in the report.
+
+7. An object should only have to worry about its own individual state and behavior. Structured logic is more commonly meant to control flow through collections of individual objects: testing some attribute based on a condition or looping through each instance to perform a calculation. By maintaining this separation, we can avoid creating unwieldy and fragile "God classes", and we can continue scaling up our systems without fear.
