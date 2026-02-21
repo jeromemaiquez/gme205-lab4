@@ -22,7 +22,23 @@ def parcels_above_threshold(parcels: list, threshold: float) -> list:
     return large_parcels
 
 def count_by_zone(parcels: list) -> dict:
-    pass
+    count_per_zone = {}
+    
+    for parcel_data in parcels:
+        parcel = Parcel.from_dict(parcel_data)
+        if parcel.zone in list(count_per_zone.keys()):
+            count_per_zone[parcel.zone] += 1
+        else:
+            count_per_zone[parcel.zone] = 1
+    
+    return count_per_zone
 
 def intersecting_parcels(parcels: list, zone: str) -> list:
-    pass
+    intersecting_parcels = []
+
+    for parcel_data in parcels:
+        parcel = Parcel.from_dict(parcel_data)
+        if parcel.zone == zone:
+            intersecting_parcels.append(parcel.as_dict())
+
+    return intersecting_parcels
