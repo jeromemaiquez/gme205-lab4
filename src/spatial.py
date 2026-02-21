@@ -1,5 +1,6 @@
 from shapely.geometry import Point as ShapelyPoint
 from shapely.geometry import Polygon as ShapelyPolygon
+from math import cos, radians
 
 class SpatialObject:
     """
@@ -9,6 +10,21 @@ class SpatialObject:
 
     def __init__(self, geometry):
         self.geometry = geometry
+
+    # With help from Gemini
+    def area(self):
+        if self.geometry.area == 0.:
+            return 0
+        
+        # Get rough latitude of given geometry
+        lat = self.geometry.centroid.y
+
+        # Set conversion factors from degrees to meters
+        meters_per_degree_latitude = 111194.93
+        meters_per_degree_longitude = meters_per_degree_latitude * cos(radians(lat))
+
+        area = self.geometry.area * meters_per_degree_latitude * meters_per_degree_longitude
+        return area
 
 class Parcel(SpatialObject):
     """
