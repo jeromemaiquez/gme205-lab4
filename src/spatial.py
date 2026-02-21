@@ -20,7 +20,7 @@ class SpatialObject:
         lat = self.geometry.centroid.y
 
         # Set conversion factors from degrees to meters
-        meters_per_degree_latitude = 111194.93
+        meters_per_degree_latitude = 111320
         meters_per_degree_longitude = meters_per_degree_latitude * cos(radians(lat))
 
         area = self.geometry.area * meters_per_degree_latitude * meters_per_degree_longitude
@@ -62,7 +62,8 @@ class Parcel(SpatialObject):
             "parcel_id": self.id,
             "zone": self.zone,
             "is_active": self.is_active,
-            "area_sqm": self.area_sqm,
+            # "area_sqm": self.area_sqm,
+            "area_sqm": self.area(),
             "geometry": {
                 "type": self.geometry_type,
                 "coordinates": self.geometry_coords

@@ -6,7 +6,8 @@ def total_active_area(parcels: list) -> float:
     for parcel_data in parcels:
         parcel = Parcel.from_dict(parcel_data)
         if parcel.is_active:
-            total_active_area += parcel.area_sqm
+            # total_active_area += parcel.area_sqm
+            total_active_area += parcel.area()
     
     return total_active_area
 
@@ -16,7 +17,8 @@ def parcels_above_threshold(parcels: list, threshold: float) -> list:
 
     for parcel_data in parcels:
         parcel = Parcel.from_dict(parcel_data)
-        if parcel.area_sqm > threshold:
+        # if parcel.area_sqm > threshold:
+        if parcel.area() > threshold:
             large_parcels.append(parcel.as_dict())
     
     return large_parcels
