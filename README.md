@@ -41,22 +41,64 @@ In the terminal, ensuring that ```(.venv)``` is present in the prompt, run the f
     - Display error message
     - Stop program
 5. Initialize the following:
-    - `total_area` = 0 sqm
+    - `total_active_area` = 0 sqm
     - `threshold_area` = TBD sqm
     - `large_parcels` = empty list
-    - `unique_zones` = list of unique zone types
     - `count_per_zone` = emtpy dict
     - `target_zone` = residential or commercial
     - `intersecting_parcels` = empty list
 6. For each parcel:
-    - Calculate new `total_area` = `total_area` + `parcel.area`
-    - If `parcel.area` > `threshold_area` &rarr; add parcel to `large_parcels`
-    - For each zone in `unique_zones`:
-        - Initialize `count_in_zone`
-        - If `parcel.zone` == zone &rarr; calculate new `count_in_zone` = `count_in_zone` + 1
-        - Add `zone: count_in_zone` to `count_per_zone`
-    - If `parcel.area` == `target_zone` &rarr; add parcel to `intersecting_parcels`
-7. Display `total_area`
+    - If `parcel.is_active` == True &rarr; Calculate new `total_active_area` = `total_active_area` + `parcel.area_sqm`
+    - If `parcel.area_sqm` > `threshold_area` &rarr; add parcel to `large_parcels`
+    - If `parcel.zone` in keys of `count_per_zone`:
+        - Calculate `count_per_zone[zone]` += 1
+    - Else: Calculate `count_per_zone[zone]` = 1
+    - If `parcel.zone` == `target_zone` &rarr; add parcel to `intersecting_parcels`
+7. Display `total_active_area`
 8. Display `large_parcels`
 9. Display `count_per_zone`
 10. Display `intersecting_parcels`
+
+# Pseudocode
+
+BEGIN
+LOAD parcels from JSON file
+CONVERT parcels into Parcel objects
+STORE in parcel_list
+
+IF parcel_list is empty THEN
+PRINT "No parcels found."
+STOP
+END IF
+
+SET total_active_area = 0
+SET threshold_area = TBD
+SET large_parcels = empty list
+SET count_per_zone = empty dict
+SET target_zone = residential or commercial
+SET intersecting_parcels = empty list
+
+FOR EACH parcel IN parcel_list:
+    IF parcel.is_active == True
+    SET total_active_area = total_active_area + parcel.area
+    END IF
+
+    IF parcel.area_sqm > threshold_area
+    APPEND parcel to large_parcels
+    END IF
+
+    IF parcel.zone NOT IN count_per_zone.keys()
+    SET count_per_zone[parcel.zone] += 1
+    ELSE
+    SET count_per_zone[parcel.zone] = 1
+    END IF
+
+    IF parcel.zone == target_zone
+    APPEND parcel to intersecting_parcels
+    END IF
+END FOR
+
+DISPLAY total_active_area
+DISPLAY large_parcels
+DISPLAY count_per_zone
+DISPLAY intersecting_parcels
